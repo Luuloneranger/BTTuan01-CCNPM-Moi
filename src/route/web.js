@@ -1,26 +1,25 @@
-import express from "express"; //gọi Express
-import homeController from "../controller/homeController"; //gọi controller
+import express from "express";
+import homeController from "../controller/homeController";
 
-let router = express.Router(); //khởi tạo Route
+let router = express.Router();
 
 let initWebRoutes = (app) => {
   router.get("/", (req, res) => {
     return res.send("Trình Văn Lưu");
   });
 
-  //cách 2: gọi hàm trong controller
-  router.get("/home", homeController.getHomePage); //url cho trang chủ
-  router.get("/about", homeController.getAboutPage); //url cho trang about
-  router.get("/crud", homeController.getCRUD); //url get crud
+  router.get("/home", homeController.getHomePage);
+  router.get("/about", homeController.getAboutPage);
+  router.get("/crud", homeController.getCRUD);
 
-  router.post("/post-crud", homeController.postCRUD); //url post crud
-  router.get("/get-crud", homeController.getFindAllCrud); //url lấy findAll
-  router.get("/edit-crud", homeController.getEditCRUD); //url get editcrud
+  router.post("/post-crud", homeController.postCRUD);
+  router.get("/get-crud", homeController.getFindAllCrud);
+  router.get("/edit-crud", homeController.getEditCRUD);
 
-  router.post("/put-crud", homeController.putCRUD); //url put crud
-  router.get("/delete-crud", homeController.deleteCRUD); //url get delete crud
+  router.post("/put-crud", homeController.putCRUD);
+  router.get("/delete-crud", homeController.deleteCRUD);
 
-  return app.use("/", router); //url mặc định
+  return app.use("/", router);
 };
 
 module.exports = initWebRoutes;
