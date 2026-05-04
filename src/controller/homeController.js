@@ -1,54 +1,47 @@
-import db from "../models/index"; //import database
-import CRUDService from "../services/CRUDService"; //import service
+import db from "../models/index";
+import CRUDService from "../services/CRUDService";
 
-//hàm getHomePage
 let getHomePage = async (req, res) => {
   ``;
   try {
-    let data = await db.User.findAll(); //lấy dữ liệu từ models/index
+    let data = await db.User.findAll();
     console.log("....................................");
     console.log(data);
     console.log("....................................");
     return res.render("homepage.ejs", {
-      data: JSON.stringify(data), //trả dữ liệu data về view
+      data: JSON.stringify(data),
     });
   } catch (e) {
     console.log(e);
   }
 };
 
-//hàm getAbout
 let getAboutPage = (req, res) => {
   return res.render("test/about.ejs");
 };
 
-//hàm CRUD
 let getCRUD = (req, res) => {
   return res.render("crud.ejs");
 };
 
-//hàm findAll CRUD
 let getFindAllCrud = async (req, res) => {
   let data = await CRUDService.getAllUser();
   return res.render("users/findAllUser.ejs", {
     datalist: data,
-  }); //gọi view và truyền dữ liệu ra view
+  });
 };
 
-//hàm post CRUD
 let postCRUD = async (req, res) => {
-  let message = await CRUDService.createNewUser(req.body); //gọi service
+  let message = await CRUDService.createNewUser(req.body);
   console.log(message);
-  return res.send("Post crud to server");
+  return res.redirect("/get-crud");
 };
 
-//hàm lấy dữ liệu để edit
 let getEditCRUD = async (req, res) => {
   let userId = req.query.id;
   if (userId) {
-    //check Id
     let userData = await CRUDService.getUserInfoById(userId);
-    return res.render("users/editUser.ejs", {
+    return res.render("users/updateUser.ejs", {
       data: userData,
     });
   } else {
@@ -58,14 +51,14 @@ let getEditCRUD = async (req, res) => {
 
 let putCRUD = async (req, res) => {
   let data = req.body;
-  let data1 = await CRUDService.updateUser(data); //update rồi hiển thị lại danh sách user
+  let data1 = await CRUDService.updateUser(data);
   return res.render("users/findAllUser.ejs", {
     datalist: data1,
   });
 };
 
 let deleteCRUD = async (req, res) => {
-  let id = req.query.id; //vì trên view ?id=1
+  let id = req.query.id;
   if (id) {
     await CRUDService.deleteUserById(id);
     return res.send("Deleted!!!!!!!!!!!!!");
@@ -74,7 +67,6 @@ let deleteCRUD = async (req, res) => {
   }
 };
 
-//export ra object
 module.exports = {
   getHomePage: getHomePage,
   getAboutPage: getAboutPage,
