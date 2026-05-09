@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Cư dân Profile</title>
+  </head>
+  <body>
+    <h1>Trang Cá Nhân Cư Dân</h1>
+    <div id="data">Đang tải...</div>
+    <button
+      onclick="
+        localStorage.clear();
+        window.location.href = '/login';
+      "
+    >
+      Đăng xuất
+    </button>
+
+    <script>
+      async function getProfile() {
+        const token = localStorage.getItem("token");
+        const res = await fetch("api/user/profile", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const result = await res.json();
+
+        if (res.status === 200) {
+          document.getElementById("data").innerHTML = `
+                    <p>ID: ${result.data.id}</p>
+                    <p>Quyền: ${result.data.roleId}</p>
+                `;
+        } else {
+          window.location.href = "/login";
+        }
+      }
+      getProfile();
+    </script>
+  </body>
+</html>

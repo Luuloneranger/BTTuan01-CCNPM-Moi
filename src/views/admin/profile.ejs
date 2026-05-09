@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Admin Dashboard</title>
+  </head>
+  <body>
+    <h1 style="color: red">Bảng điều khiển Admin</h1>
+    <div id="admin-data"></div>
+    <button onclick="window.location.href = '/get-crud'">
+      Quản lý danh sách User
+    </button>
+    <button
+      onclick="
+        localStorage.clear();
+        window.location.href = '/login';
+      "
+    >
+      Thoát
+    </button>
+
+    <script>
+      async function getAdminData() {
+        const token = localStorage.getItem("token");
+        const res = await fetch("api/admin/profile", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const result = await res.json();
+
+        if (res.status === 200) {
+          document.getElementById("admin-data").innerHTML = `
+                    <p>Chào Admin ID: ${result.adminInfo.id}</p>
+                `;
+        } else {
+          window.location.href = "/login";
+        }
+      }
+      getAdminData();
+    </script>
+  </body>
+</html>

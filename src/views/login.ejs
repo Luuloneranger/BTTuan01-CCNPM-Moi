@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Đăng nhập</title>
+  </head>
+  <body>
+    <h2>Đăng nhập Hệ thống</h2>
+    <input type="email" id="email" placeholder="Email" /><br /><br />
+    <input type="password" id="password" placeholder="Mật khẩu" /><br /><br />
+    <button onclick="handleLogin()">Đăng nhập</button>
+
+    <script>
+      async function handleLogin() {
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        const res = await fetch("/api/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        });
+
+        const result = await res.json();
+        if (res.status === 200) {
+          // Lưu token để dùng cho các trang sau
+          localStorage.setItem("token", result.token);
+          // Chuyển hướng theo url server trả về
+          window.location.href = result.redirectUrl;
+        } else {
+          alert(result.message);
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -20,6 +20,10 @@ let getAboutPage = (req, res) => {
   return res.render("test/about.ejs");
 };
 
+let getGuestPage = (req, res) => {
+  return res.render("guest/guest.ejs");
+};
+
 let getCRUD = (req, res) => {
   return res.render("crud.ejs");
 };
@@ -67,6 +71,39 @@ let deleteCRUD = async (req, res) => {
   }
 };
 
+let getLoginPage = (req, res) => {
+  return res.render("login.ejs");
+};
+
+// 2. Trả về dữ liệu JSON cho Profile Cư dân
+let getUserProfilePage = (req, res) => {
+  // Thông tin user đã được middleware 'verifyToken' giải mã và lưu vào 'req.user'
+  return res.status(200).json({
+    errCode: 0,
+    message: "Lấy thông tin cá nhân Cư dân thành công",
+    data: {
+      id: req.user.id,
+      role: req.user.role,
+      type: "Resident",
+      status: "Active",
+    },
+  });
+};
+
+// 3. Trả về dữ liệu JSON cho Profile Admin
+let getAdminProfilePage = (req, res) => {
+  return res.status(200).json({
+    errCode: 0,
+    message: "Truy cập quyền Quản trị viên thành công",
+    adminInfo: {
+      id: req.user.id,
+      role: req.user.role,
+      permissions: ["ALL_ACCESS"],
+      managementScope: "Toàn bộ chung cư",
+    },
+  });
+};
+
 module.exports = {
   getHomePage: getHomePage,
   getAboutPage: getAboutPage,
@@ -76,4 +113,8 @@ module.exports = {
   getEditCRUD: getEditCRUD,
   putCRUD: putCRUD,
   deleteCRUD: deleteCRUD,
+  getGuestPage: getGuestPage,
+  getLoginPage: getLoginPage,
+  getUserProfilePage: getUserProfilePage,
+  getAdminProfilePage: getAdminProfilePage,
 };
