@@ -24,7 +24,7 @@ npm install
 3. Tạo file `.env` trong thư mục gốc:
 
 ```
-PORT=8088
+PORT=8089
 NODE_ENV=development
 ```
 
@@ -44,39 +44,9 @@ Chạy ứng dụng ở chế độ development:
 npm start
 ```
 
-Ứng dụng sẽ chạy trên `http://localhost:8088`
+Ứng dụng sẽ chạy trên `http://localhost:8089`
 
-## Cấu trúc thư mục
 
-```
-BTTuan01-CCNPM-Moi/
-├── src/
-│   ├── config/           # Cấu hình ứng dụng
-│   │   ├── config.json   # Cấu hình database
-│   │   ├── configdb.js   # Kết nối database
-│   │   └── viewEngine.js # Cấu hình view engine
-│   ├── controller/       # Controllers xử lý logic
-│   │   └── homeController.js
-│   ├── models/           # Sequelize models
-│   │   ├── index.js
-│   │   └── user.js
-│   ├── route/            # Định tuyến
-│   │   └── web.js
-│   ├── services/         # Business logic
-│   │   └── CRUDService.js
-│   ├── views/            # EJS templates
-│   │   ├── crud.ejs
-│   │   └── users/
-│   │       ├── findAllUser.ejs
-│   │       └── updateUser.ejs
-│   ├── migrations/       # Database migrations
-│   ├── seeders/          # Database seeders
-│   └── server.js         # Entry point
-├── .env                  # Biến môi trường
-├── .sequelizerc           # Cấu hình Sequelize
-├── package.json          # Dependencies
-└── README.md
-```
 
 ## API Endpoints
 
@@ -87,6 +57,11 @@ BTTuan01-CCNPM-Moi/
 | GET         | `/edit-crud?id=X`   | Hiển thị form chỉnh sửa  |
 | POST        | `/put-crud`         | Cập nhật người dùng      |
 | GET         | `/delete-crud?id=X` | Xóa người dùng           |
+| GET         | `/login`            | đăng nhập                |
+
+## Các bước test 
+B1 : có thể gõ địa chỉ `http://localhost:8089/get-crud` để tạo một tài khoản 
+B2 : Quay lại trang `http://localhost:8089/login` để đăng nhập
 
 ## Tác giả
 
